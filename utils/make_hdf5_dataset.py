@@ -12,7 +12,6 @@ def make_mnist_dvs(path_to_data, path_to_hdf5, digits, max_pxl_value, min_pxl_va
     """"
     Preprocess the .aedat file and save the dataset as an .hdf5 file
     """
-    a = os.listdir(path_to_data)
     dirs = [r'/' + dir_ for dir_ in os.listdir(path_to_data)]
 
     S_prime = math.ceil(T_max / window_length)
