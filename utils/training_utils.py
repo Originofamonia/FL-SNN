@@ -67,7 +67,7 @@ def refractory_period(network, device):
         network(torch.zeros([len(network.visible_neurons)], dtype=torch.float, device=device))
 
 
-def get_acc_and_loss(network, input_sequence, output_sequence):
+def get_acc_and_loss(network, input_sequence, output_sequence, device):
     """"
     Compute loss and accuracy on the indices from the dataset precised as arguments
     """
@@ -85,7 +85,7 @@ def get_acc_and_loss(network, input_sequence, output_sequence):
 
     for s in range(S):
         if s % S_prime == 0:
-            refractory_period(network)
+            refractory_period(network, device)
 
         log_proba = network(input_sequence[int(s / S_prime), :, s % S_prime])
         loss += torch.sum(log_proba).numpy()

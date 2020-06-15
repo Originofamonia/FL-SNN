@@ -99,7 +99,7 @@ def main():
         test_indices = np.random.choice(np.arange(input_test.shape[0]), [epochs_test], replace=False)
         np.random.shuffle(test_indices)
 
-        acc, loss = get_acc_and_loss(network, input_test[test_indices], output_test[test_indices])
+        acc, loss = get_acc_and_loss(network, input_test[test_indices], output_test[test_indices], device)
 
         test_accs.append(acc)
         print('Final test accuracy: %f' % acc)

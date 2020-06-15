@@ -82,21 +82,26 @@ def make_shd(path_to_train, path_to_test, path_to_hdf5, digits, window_length):
                                      shape=(0, len(digits), S_prime))
 
 
-path_to_data = r'../mnist-dvs'
+def main():
+    path_to_data = r'../mnist-dvs'
 
-# digits to consider
-digits = [i for i in range(2)]
+    # digits to consider
+    digits = [i for i in range(2)]
 
-# Pixel values to consider
-max_pxl_value = 73
-min_pxl_value = 48
+    # Pixel values to consider
+    max_pxl_value = 73
+    min_pxl_value = 48
 
-T_max = int(2e6)  # maximum duration of an example in us
-window_length = 25000
+    T_max = int(2e6)  # maximum duration of an example in us
+    window_length = 25000
 
-scale = 'scale4'
+    scale = 'scale4'
 
-path_to_hdf5 = r'../mnist-dvs/mnist_dvs_%dms_%dpxl_%d_digits.hdf5' \
-               % (int(window_length / 1000), max_pxl_value - min_pxl_value + 1, len(digits))
+    path_to_hdf5 = r'../mnist-dvs/mnist_dvs_%dms_%dpxl_%d_digits.hdf5' \
+                   % (int(window_length / 1000), max_pxl_value - min_pxl_value + 1, len(digits))
 
-make_mnist_dvs(path_to_data, path_to_hdf5, digits, max_pxl_value, min_pxl_value, T_max, window_length, scale)
+    make_mnist_dvs(path_to_data, path_to_hdf5, digits, max_pxl_value, min_pxl_value, T_max, window_length, scale)
+
+
+if __name__ == '__main__':
+    main()
