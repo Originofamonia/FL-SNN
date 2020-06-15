@@ -33,12 +33,14 @@ def make_topology(topology_type, n_input_neurons, n_output_neurons, n_hidden_neu
     return topology
 
 
-def make_network_parameters(n_input_neurons, n_output_neurons, n_hidden_neurons, topology_type, density=1, mode='train', weights_magnitude=0.05,
-                            n_basis_ff=8, ff_filter=filters.raised_cosine_pillow_08, n_basis_fb=1, fb_filter=filters.raised_cosine_pillow_08,
-                            tau_ff=10, tau_fb=10, mu=1.5, task='supervised'):
+def make_network_parameters(n_input_neurons, n_output_neurons, n_hidden_neurons, topology_type, device, density=1,
+                            mode='train', weights_magnitude=0.05, n_basis_ff=8,
+                            ff_filter=filters.raised_cosine_pillow_08, n_basis_fb=1,
+                            fb_filter=filters.raised_cosine_pillow_08, tau_ff=10, tau_fb=10, mu=1.5,
+                            task='supervised'):
 
-    topology = make_topology(topology_type, n_input_neurons, n_output_neurons, n_hidden_neurons, density)
-    print(topology[:, n_input_neurons:])
+    topology = make_topology(topology_type, n_input_neurons, n_output_neurons, n_hidden_neurons, density).to(device)
+    # print(topology[:, n_input_neurons:])
     network_parameters = {'n_input_neurons': n_input_neurons,
                           'n_output_neurons': n_output_neurons,
                           'n_hidden_neurons': n_hidden_neurons,
@@ -52,16 +54,17 @@ def make_network_parameters(n_input_neurons, n_output_neurons, n_hidden_neurons,
                           'mu': mu,
                           'weights_magnitude': weights_magnitude,
                           'task': task,
-                          'mode': mode
+                          'mode': mode,
+                          'device': device
                           }
 
     return network_parameters
 
 
-def refractory_period(network):
+def refractory_period(network, device):
     length = network.memory_length + 1
     for s in range(length):
-        network(torch.zeros([len(network.visible_neurons)], dtype=torch.float))
+        network(torch.zeros([len(network.visible_neurons)], dtype=torch.float, device=device))
 
 
 def get_acc_and_loss(network, input_sequence, output_sequence):
@@ -147,7 +150,7 @@ def local_feedback_and_update(network, eligibility_trace, learning_signal, et_te
 
 
 
-def train(network,  input_train, output_train, indices, learning_rate, kappa, deltas, alpha, r):
+def train(network, input_train, output_train, indices, learning_rate, kappa, deltas, alpha, r, device):
     """"
     Train a network on the sequence passed as argument.
     """
@@ -181,7 +184,7 @@ def train(network,  input_train, output_train, indices, learning_rate, kappa, de
     for s in range(deltas, S):
         # Reset network for each example
         if s % S_prime == 0:
-            refractory_period(network)
+            refractory_period(network, device)
 
         # Feedforward sampling step
         log_proba, ls_temp, et_temp = feedforward_sampling(network, training_sequence[indices[int(s / S_prime)]], et_temp, ls_temp, s, S_prime, alpha, r)
