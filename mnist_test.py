@@ -58,7 +58,7 @@ def main():
     n_hidden_neurons = 4
 
     ### Learning parameters
-]    if args.epochs:
+    if args.epochs:
         epochs = args.epochs
     else:
         epochs = input_train.shape[0]
