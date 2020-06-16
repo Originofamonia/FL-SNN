@@ -85,7 +85,7 @@ def main():
     path_to_data = r'../mnist-dvs'
 
     # digits to consider
-    digits = [i for i in range(2)]
+    digits = [i for i in range(10)]
 
     # Pixel values to consider
     max_pxl_value = 73

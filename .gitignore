@@ -3,6 +3,7 @@ _old/
 results/
 results_distributed/
 local/
+.idea/
 # Ignore following files
 *.h5
 *.hdf5

@@ -20,10 +20,10 @@ if __name__ == "__main__":
 
     # Training arguments
     parser.add_argument('--dataset', default='mnist_dvs_2', type=str, help='select dataset')
-    parser.add_argument('--num_ite', default=10, type=int, help='Number of times every experiment will be repeated')
+    parser.add_argument('--num_ite', default=1, type=int, help='Number of times every experiment will be repeated')
     parser.add_argument('--epochs', default=None, type=int, help='Number of samples to train on for each experiment')
     parser.add_argument('--epochs_test', default=None, type=int, help='Number of samples to test on')
-    parser.add_argument('--lr', default=0.005, type=float, help='Learning rate')
+    parser.add_argument('--lr', default=5e-3, type=float, help='Learning rate')
     parser.add_argument('--deltas', default=1, type=int)
     parser.add_argument('--kappa', default=0.2, type=float, help='Learning signal and eligibility trace decay '
                                                                  'coefficient')
@@ -58,7 +58,7 @@ def main():
     n_hidden_neurons = 4
 
     ### Learning parameters
-    if args.epochs:
+]    if args.epochs:
         epochs = args.epochs
     else:
         epochs = input_train.shape[0]
