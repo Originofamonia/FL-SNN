@@ -4,6 +4,7 @@ results/
 results_distributed/
 local/
 .idea/
+__pycache__/
 # Ignore following files
 *.h5
 *.hdf5
